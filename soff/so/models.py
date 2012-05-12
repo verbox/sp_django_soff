@@ -18,10 +18,12 @@ class FoodOrder(models.Model):
     table = models.ForeignKey(Table)
     comment = models.TextField()
 
-#Reprezentuje żarcie - tj. dane dotyczące pojedynczego dania   
+#Reprezentuje żarcie - tj. dane dotyczące pojedynczego dania, napoju itp.   
 class Dish(models.Model):
     name = models.CharField(max_length=100)
     addedDate = models.DateField(auto_now_add=True)
+    prize = models.DecimalField(max_digits=50,decimal_places=2)
+    #waga - w gramach
     information = models.TextField()
     
 #Wpis w zamowieniu - para Danie-il.sztuk
