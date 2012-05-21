@@ -6,11 +6,14 @@ from django.contrib.auth.models import User
 class Table(models.Model):
     clientsCount = models.IntegerField(default=0)
     maxClientsCount = models.IntegerField(default=4)
+    
+    def __unicode__(self):
+        return self.pk + " " +self.maxClientsCount
 
 #User = pracownik
 
 #Zamowienie, skladajace sie z listy wpisow, kelnera (pracownika-Usera),
-#stolika i ewentualnego komentarzu do zamowienia
+#stolika i ewentualnego komentarza do zamowienia
 #Z pol "obslugowych"
 class FoodOrder(models.Model):
     #lista wpisow w zamowieniu - z automatu
@@ -25,6 +28,8 @@ class Dish(models.Model):
     prize = models.DecimalField(max_digits=50,decimal_places=2)
     #waga - w gramach
     information = models.TextField()
+    #kto wprowadzil
+    inscribeBy = models.ForeignKey(User)
     
 #Wpis w zamowieniu - para Danie-il.sztuk
 class DishEntry(models.Model):

@@ -14,6 +14,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    #tylko w celach testowych
-    url(r'^$', 'so.views.start'),
+    #konkretna aplikacja
+    url(r'so/',include('soff.so.urls')),
 )
