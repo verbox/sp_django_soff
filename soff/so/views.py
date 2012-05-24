@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from utils import AddDishForm
+from models import Dish
 
 @login_required(login_url='/so/login')
 def start(request):
@@ -23,7 +25,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request,user)
-                return HttpResponse("Zalogowany!")
+                return redirect(request.GET['next'])
             else:
                 return HttpResponse("Zablokowany!!!")
         else:
@@ -32,3 +34,23 @@ def login(request):
         form = AuthenticationForm()
         data['form']=form
         return render_to_response('login.html',data)
+    
+@login_required(login_url='/so/login')
+def addDish(request):
+    data = {}
+    data.update(csrf(request))
+    if request.method == 'POST': #jak wyslano formularza
+        form = AddDishForm(request.POST)
+        if form.is_valid(): #jak wszystko okej
+            newDish = Dish(name=request.POST['nazwa'],
+                           prize=request.POST['cena'],
+                           information=request.POST['informacje'],
+                           inscribeBy=request.user)
+            newDish.save()
+            return HttpResponse("Dodano danie")
+    else:
+        form = AddDishForm()
+        data['form']=form
+        data['user']=request.user;
+        return render_to_response('addDish.html',data)
+    

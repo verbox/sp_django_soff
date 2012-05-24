@@ -3,9 +3,13 @@
 {% block content %}
 
 <h2>Dania</h2>
+<a href="dish/add/">Dodaj nowe danie</a>
 <ul>
 	{% for dish in object_list %}
-		<li>{{ dish.name }}</li>
+		<li>{{ dish.name }} <br>
+		<a href="dish/{{ dish.pk }}">Szczegóły</a>
+		
+		</li>
 	{% endfor %}
 </ul>
 {% endblock %}
