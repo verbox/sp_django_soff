@@ -47,9 +47,9 @@ def addDish(request):
     if request.method == 'POST': #jak wyslano formularza
         form = AddDishForm(request.POST)
         if form.is_valid(): #jak wszystko okej
-            newDish = Dish(name=request.POST['nazwa'],
-                           prize=request.POST['cena'],
-                           information=request.POST['informacje'],
+            newDish = Dish(name=request.POST['name'],
+                           prize=request.POST['prize'],
+                           information=request.POST['information'],
                            inscribeBy=request.user)
             newDish.save()
             return HttpResponse("Dodano danie")
@@ -59,3 +59,29 @@ def addDish(request):
         data['user']=request.user;
         return render_to_response('addDish.html',data)
     
+#edycja dania do listy dan
+@login_required(login_url='/so/login')
+def editDish(request,dish_id):
+    data = {}
+    data.update(csrf(request))
+    editedDish = Dish.objects.get(pk=dish_id)
+    if request.method == 'POST': #jak wyslano formularza
+        form = AddDishForm(request.POST)
+        if form.is_valid(): #jak wszystko okej
+            #to pozmieniaj dane
+            editedDish.name=form.cleaned_data['name']
+            editedDish.prize=form.cleaned_data['prize']
+            editedDish.information=form.cleaned_data['information']
+            editedDish.save()
+            #editedDish.information=editedDish.information[0:]
+            #editedDish.save()
+            return HttpResponse('Edytowano danie')
+    else:
+        
+        fdata = {'name' : editedDish.name, 'prize' : editedDish.prize,
+                     'information' : editedDish.information}
+        form = AddDishForm(fdata)
+        data['form']=form
+        data['dish']=editedDish
+        data['user']=request.user;
+        return render_to_response('editDish.html',data)

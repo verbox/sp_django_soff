@@ -7,11 +7,12 @@ urlpatterns = patterns('soff.so.views',
     url(r'^logout_view$','logout_view'),
     #zwiazane z zarciami
     #dodaj zarcie
-    url(r'^dish/add$','addDish'),
-    #lista zarc                   
+    url(r'^dish/add','addDish'),
+    #edytuj danie
+    url(r'^dish/edit/(?P<dish_id>\d+)','editDish'),
+        #lista zarc                   
     url(r'^dish$',ProtectedListView.as_view(queryset=Dish.objects.all(),
                                            template_name="dishes.html" )),
-    #edytuj danie
     #lista stolikow (albo stolik=link, gdy dany kelner juz "obsluguje" dany 
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj)
     #dane zamowienie

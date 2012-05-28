@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Edytuj danie {{ dish.pk }} -> {{dish.name}} </h2>
+<form action="{{dish.pk}}" method="post">{% csrf_token %}
+	{{ form.as_p|safe }}
+	<input type="submit" value="Edytuj" />
+</form>
+
+{% endblock %}

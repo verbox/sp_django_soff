@@ -8,7 +8,7 @@
 	{% for dish in object_list %}
 		<li>{{ dish.name }} <br>
 		<a href="dish/{{ dish.pk }}">Szczegóły</a><br>
-		{% if dish.user.username == user.username %}
+		{% if dish.inscribeBy == user %}
 		<a href="dish/edit/{{ dish.pk }}">Edytuj</a>
 		{% endif %}
 		

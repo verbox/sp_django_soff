@@ -11,6 +11,6 @@ class ProtectedListView(ListView):
         return super(ListView, self).dispatch(*args, **kwargs)
 
 class AddDishForm(forms.Form):
-    nazwa = forms.CharField()
-    cena = forms.DecimalField()
-    informacje = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(label='Nazwa')
+    prize = forms.DecimalField(label='Cena')
+    information = forms.CharField(label='Informacja', widget=forms.Textarea)
