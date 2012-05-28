@@ -17,6 +17,7 @@ urlpatterns = patterns('soff.so.views',
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj)
     #dane zamowienie
     #utworz zamowienie
-    #edytuj zamowienie
+    #dodaj wpis do zamowienia
+    #zmien stan zamowienia
     url(r'^', 'start'),
 )

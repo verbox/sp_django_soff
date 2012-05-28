@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 #Klasa reprezentująca pojedynczy stolik
 class Table(models.Model):
     maxClientsCount = models.IntegerField(default=4)
-    reserved = models.ForeignKey(User)
+    reserved = models.BooleanField(default=False)
     def __unicode__(self):
-        return self.pk + " " +self.maxClientsCount
+        return self.pk.__str__() + ' ' +self.maxClientsCount.__str__()
 
 #User = pracownik
 
@@ -19,12 +19,19 @@ class FoodOrder(models.Model):
     waiter = models.ForeignKey(User)
     table = models.ForeignKey(Table)
     comment = models.TextField()
+    
+    def prize(self):
+        wynik = 0.0
+        #wyciagnij liste DishEntry i pojedz po niej
+        for entry in self.dishentry_set.all():
+            wynik=wynik+entry.count*entry.dish.prize
+        return wynik
 
 #Reprezentuje żarcie - tj. dane dotyczące pojedynczego dania, napoju itp.   
 class Dish(models.Model):
     name = models.CharField(max_length=100)
     addedDate = models.DateField(auto_now_add=True)
-    prize = models.DecimalField(max_digits=50,decimal_places=2)
+    prize = models.FloatField()
     #waga - w gramach
     information = models.TextField()
     #kto wprowadzil
