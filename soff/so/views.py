@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from utils import AddDishForm
@@ -35,6 +35,11 @@ def login(request):
         data['form']=form
         return render_to_response('login.html',data)
     
+def logout_view(request):
+    logout(request)
+    return HttpResponse('Wylogowano')
+#zarcie
+#dodanie dania do listy dan
 @login_required(login_url='/so/login')
 def addDish(request):
     data = {}

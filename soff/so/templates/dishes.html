@@ -3,11 +3,14 @@
 {% block content %}
 
 <h2>Dania</h2>
-<a href="dish/add/">Dodaj nowe danie</a>
+<a href="dish/add">Dodaj nowe danie</a> || coś tam
 <ul>
 	{% for dish in object_list %}
 		<li>{{ dish.name }} <br>
-		<a href="dish/{{ dish.pk }}">Szczegóły</a>
+		<a href="dish/{{ dish.pk }}">Szczegóły</a><br>
+		{% if dish.user.username == user.username %}
+		<a href="dish/edit/{{ dish.pk }}">Edytuj</a>
+		{% endif %}
 		
 		</li>
 	{% endfor %}

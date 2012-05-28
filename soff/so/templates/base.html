@@ -26,7 +26,10 @@
       <div class="sidebar">         
       </div>
       <div id="content">
-      Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }}
+      Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }} || 
+      {% if user %}
+      <a href="http://localhost:8000/so/logout_view">Wyloguj się</a> <br>
+      {% endif %}
       	{% block content %}
       	Simple content
       	{% endblock %}      

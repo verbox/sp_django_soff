@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 
 #Klasa reprezentująca pojedynczy stolik
 class Table(models.Model):
-    clientsCount = models.IntegerField(default=0)
     maxClientsCount = models.IntegerField(default=4)
-    
+    reserved = models.ForeignKey(User)
     def __unicode__(self):
         return self.pk + " " +self.maxClientsCount
 
