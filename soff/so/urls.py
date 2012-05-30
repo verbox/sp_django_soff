@@ -16,14 +16,14 @@ urlpatterns = patterns('soff.so.views',
     #lista stolikow (albo stolik=link, gdy dany kelner juz "obsluguje" dany 
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj 
     #i przenosi na tworzenie nowego zamowienia
-    url(r'^tables','show_tables'),
+    url(r'^tables','showTables'),
     #dane zamowienie (szczegoly)
-    url(r'^order/(?P<order_id>\d+)','showOrder'),
+    #url(r'^order/(?P<order_id>\d+)','showOrder'),
     #utworz zamowienie
-    url(r'^order/add/(?P<table_id>\d+)','addOrder'), #f
+    #url(r'^order/add/(?P<table_id>\d+)','addOrder'), #f
     #dodaj wpis do zamowienia
-    url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
+    #url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
     #zmien stan zamowienia
-    url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+','changeOrderState'),
+    #url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+','changeOrderState'),
     url(r'^', 'start'),
 )

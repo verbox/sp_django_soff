@@ -7,7 +7,7 @@ from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from utils import AddDishForm
-from models import Dish
+from models import Dish, Table
 
 @login_required(login_url='/so/login')
 def start(request):
@@ -85,3 +85,11 @@ def editDish(request,dish_id):
         data['dish']=editedDish
         data['user']=request.user;
         return render_to_response('editDish.html',data)
+
+@login_required(login_url='/so/login')
+def showTables(request):
+    data = {}
+    tableList = Table.objects.all()
+    data['table_list']=tableList
+    return render_to_response('tables.html',data)
+    

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Stoły</h2>
+<ul>
+	{% for table in table_list %}
+		{% if table.reserved == -1 %}
+			<li>Stolik numer {{ table.pk }} (maksymalnie klientów: {{ table.maxClientsCount }})
+			<a href="order/add/{{table.pk}}"> Rezerwuj </a>
+			</li>
+		{% else %}
+			{% if table.reserved == -11 %}
+				<li>Stolik numer {{ table.pk }} (maksymalnie klientów: {{ table.maxClientsCount }})
+				(w trakcie tworzenia zamówienia)
+				</li>
+			{% else %}
+				<li><a href="order/{{table.reserved}}">
+				Stolik numer {{ table.pk }}</a></li>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</ul>
+{% endblock %}
