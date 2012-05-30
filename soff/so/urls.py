@@ -11,16 +11,16 @@ urlpatterns = patterns('soff.so.views',
     #edytuj danie
     url(r'^dish/edit/(?P<dish_id>\d+)','editDish'),
         #lista zarc                   
-    url(r'^dish$',ProtectedListView.as_view(queryset=Dish.objects.all(),
+    url(r'^dish',ProtectedListView.as_view(queryset=Dish.objects.all(),
                                            template_name="dishes.html" )),
     #lista stolikow (albo stolik=link, gdy dany kelner juz "obsluguje" dany 
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj 
     #i przenosi na tworzenie nowego zamowienia
-    url(r'^tables','showTables'),
+    url(r'^table','showTables'),
     #dane zamowienie (szczegoly)
     #url(r'^order/(?P<order_id>\d+)','showOrder'),
     #utworz zamowienie
-    #url(r'^order/add/(?P<table_id>\d+)','addOrder'), #f
+    url(r'^order/add/(?P<table_id>\d+)','addOrder'), #f
     #dodaj wpis do zamowienia
     #url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
     #zmien stan zamowienia

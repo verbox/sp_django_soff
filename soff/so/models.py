@@ -6,9 +6,14 @@ from django.contrib.auth.models import User
 class Table(models.Model):
     maxClientsCount = models.IntegerField(default=4)
     reserved = models.IntegerField(default=-1)
+    #nie wiem, jak wywolac funkcje w szablonie - dlatego tak obejdziemy problem
+    currentWaiter = models.CharField(default='---',max_length=100)
     def __unicode__(self):
         return self.pk.__str__() + ' ' +self.maxClientsCount.__str__()
-
+    def setWaiter(self,waiter):
+        self.currentWaiter = waiter.first_name + ' ' + waiter.last_name
+    def setBlankWaiter(self):
+        self.currentWaiter = '---'
 #User = pracownik
 
 #Zamowienie, skladajace sie z listy wpisow, kelnera (pracownika-Usera),

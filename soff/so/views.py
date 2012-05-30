@@ -7,7 +7,7 @@ from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from utils import AddDishForm
-from models import Dish, Table
+from models import Dish, Table, FoodOrder
 
 @login_required(login_url='/so/login')
 def start(request):
@@ -85,11 +85,32 @@ def editDish(request,dish_id):
         data['dish']=editedDish
         data['user']=request.user;
         return render_to_response('editDish.html',data)
-
+#stolik
 @login_required(login_url='/so/login')
 def showTables(request):
     data = {}
     tableList = Table.objects.all()
     data['table_list']=tableList
+    data['user']=request.user
     return render_to_response('tables.html',data)
+
+#zarezerwowanie stolika, dodanie nowego zamowienia
+@login_required(login_url='/so/login')
+def addOrder(request,table_id):
+    #wyciagnij stolik
+    currentTable = Table.objects.get(pk=table_id);
+    #wpisz rezerwacje
+    currentTable.reserved = -11
+    currentTable.save()
+    #utworz nowe zamowienie
+    newOrder = FoodOrder(table=currentTable,waiter=request.user)
+    newOrder.save()
+    #wyciagnij jego pk
+    newOrderPk = newOrder.pk
+    #wpisz do stolu jako rezerwacje
+    currentTable.reserved = newOrderPk
+    currentTable.setWaiter(request.user)
+    currentTable.save()
+    #i w tym miejscu bedzie przeniesienie do strony edytowania
+    return HttpResponse('Zarezerwowano')
     
