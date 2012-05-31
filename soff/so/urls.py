@@ -18,9 +18,9 @@ urlpatterns = patterns('soff.so.views',
     #i przenosi na tworzenie nowego zamowienia
     url(r'^table','showTables'),
     #dane zamowienie (szczegoly)
-    #url(r'^order/(?P<order_id>\d+)','showOrder'),
+    url(r'^order/(?P<order_id>\d+)','showOrder'),
     #utworz zamowienie
-    url(r'^order/add/(?P<table_id>\d+)','addOrder'), #f
+    url(r'^order/add/(?P<order_id>\d+)','addOrder'), #f
     #dodaj wpis do zamowienia
     #url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
     #zmien stan zamowienia

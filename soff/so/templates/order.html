@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Zamówienie {{ order.pk }} (stół {{ order.table.pk }})</h2>
+<p><a href="addEntry/{{order.pk}}">Dodaj nową pozycję</a></p>
+<table>
+	<tr>
+		<th>Nazwa pozycji</th>
+		<th>Sztuk</th>
+		<th>Kwota</th>
+	</tr>
+	{% for de in delist %}
+		<tr>
+			<td>{{de.dish.name}}</td>
+			<td>{{de.count}}</td>
+			<td>{{de.count}} x {{de.dish.prize}} zł = {{de.prize}} zł</td>
+		</tr>
+	{% endfor %}
+	<tr>
+		<td></td>
+		<td><strong>RAZEM</strong></td>
+		<td>{{sum}} zł </td>
+	</tr>
+</table>
+{% endblock %}

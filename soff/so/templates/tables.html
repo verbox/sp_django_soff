@@ -15,8 +15,12 @@
 				(w trakcie tworzenia zamówienia)
 				</li>
 			{% else %}
-				<li><a href="order/{{table.reserved}}">
-				Stolik numer {{ table.pk }} - {{ table.currentWaiter }}</a></li>
+				{% if table.currentWaiter == me %}
+					<li><a href="order/{{table.reserved}}">
+					Stolik numer {{ table.pk }} - {{ table.currentWaiter }}</a></li>
+				{% else %}
+					<li>Stolik numer {{ table.pk }} - {{ table.currentWaiter }}</li>
+				{% endif %}
 			{% endif %}
 		{% endif %}
 	{% endfor %}

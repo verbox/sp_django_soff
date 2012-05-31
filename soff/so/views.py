@@ -92,6 +92,8 @@ def showTables(request):
     tableList = Table.objects.all()
     data['table_list']=tableList
     data['user']=request.user
+    #glupawe, ale innego sposobu nie znam
+    data['me']=request.user.first_name + ' ' + request.user.last_name
     return render_to_response('tables.html',data)
 
 #zarezerwowanie stolika, dodanie nowego zamowienia
@@ -112,5 +114,20 @@ def addOrder(request,table_id):
     currentTable.setWaiter(request.user)
     currentTable.save()
     #i w tym miejscu bedzie przeniesienie do strony edytowania
-    return HttpResponse('Zarezerwowano')
-    
+    return redirect('/so/order/'+newOrderPk.__str__())
+
+@login_required(login_url='/so/login')
+def showOrder(request,order_id):
+    data = {}
+    #wyciagnij zamowienie
+    currentOrder = FoodOrder.objects.get(pk=order_id)
+    #wyciagnij liste wpisow, ktore sa przypisane do tego zarcia
+    dishEntryList = currentOrder.dishentry_set.all()
+    #dla kazdego wpisu wyciagnij laczna kase
+    for de in dishEntryList:
+        de.prize = de.count*de.dish.prize;
+    data['order'] = currentOrder
+    data['delist'] = dishEntryList
+    data['sum'] = currentOrder.prize()
+    data['user'] = request.user
+    return render_to_response('order.html',data)
