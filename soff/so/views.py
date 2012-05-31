@@ -1,13 +1,14 @@
 # Create your views here.
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from utils import AddDishForm
-from models import Dish, Table, FoodOrder
+from utils import AddDishForm, AddDishEntryForm
+from models import Dish, Table, FoodOrder, DishEntry
 
 @login_required(login_url='/so/login')
 def start(request):
@@ -119,8 +120,21 @@ def addOrder(request,table_id):
 @login_required(login_url='/so/login')
 def showOrder(request,order_id):
     data = {}
+    data.update(csrf(request))
     #wyciagnij zamowienie
     currentOrder = FoodOrder.objects.get(pk=order_id)
+    addEntryForm = AddDishEntryForm()
+    #formularz
+    if request.method == 'POST': #jak wyslano formularz
+        addEntryForm = AddDishEntryForm(request.POST)
+        if addEntryForm.is_valid(): #jak wszystko okej
+            newDishEntry = DishEntry(dish = addEntryForm.cleaned_data['dish'],
+                                     count = addEntryForm.cleaned_data['count'],
+                                     foodOrder = currentOrder)
+            newDishEntry.save()
+            #zaszalejmy
+            return HttpResponseRedirect(reverse('soff.so.views.showOrder',
+                                            args=(currentOrder.pk,)))
     #wyciagnij liste wpisow, ktore sa przypisane do tego zarcia
     dishEntryList = currentOrder.dishentry_set.all()
     #dla kazdego wpisu wyciagnij laczna kase
@@ -130,4 +144,17 @@ def showOrder(request,order_id):
     data['delist'] = dishEntryList
     data['sum'] = currentOrder.prize()
     data['user'] = request.user
+    data['addEntryForm'] = addEntryForm
     return render_to_response('order.html',data)
+
+#wyrzuc dana pozycje
+@login_required(login_url='/so/login')
+def delEntry(request,entry_id):
+    #wyciagnij pozycje
+    dishEntry = DishEntry.objects.get(pk=entry_id)
+    #wyciagnij pk zamowienia, aby do niego wrocic
+    orderPk = dishEntry.foodOrder.pk
+    #kasuj
+    dishEntry.delete()
+    #i wroc do zamowienia
+    return redirect('/so/order/'+orderPk.__str__())

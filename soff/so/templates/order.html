@@ -4,6 +4,7 @@
 
 <h2>Zamówienie {{ order.pk }} (stół {{ order.table.pk }})</h2>
 <p><a href="addEntry/{{order.pk}}">Dodaj nową pozycję</a></p>
+<p>
 <table>
 	<tr>
 		<th>Nazwa pozycji</th>
@@ -15,6 +16,7 @@
 			<td>{{de.dish.name}}</td>
 			<td>{{de.count}}</td>
 			<td>{{de.count}} x {{de.dish.prize}} zł = {{de.prize}} zł</td>
+			<td><a href="delEntry/{{de.pk}}">[X]</a></td>
 		</tr>
 	{% endfor %}
 	<tr>
@@ -23,4 +25,9 @@
 		<td>{{sum}} zł </td>
 	</tr>
 </table>
+</p><p>-------DODAJ NOWĄ POZYCJĘ---------</p>
+<p><form action="{{order.pk}}" method="post">{% csrf_token %}
+	{{ addEntryForm.as_p }}
+	<input type="submit" value="Dodaj" />
+</form></p>
 {% endblock %}

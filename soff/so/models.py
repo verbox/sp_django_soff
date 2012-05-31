@@ -20,11 +20,18 @@ class Table(models.Model):
 #stolika i ewentualnego komentarza do zamowienia
 #Z pol "obslugowych"
 class FoodOrder(models.Model):
+    ORDER_STATE = (
+                   ('NO','Nowe'),
+                   ('WR','W trakcie realizacji'),
+                   ('ZR','Zrealizowane'),
+                   ('ZA','Zapłacone'),
+                   )
+    
     #lista wpisow w zamowieniu - z automatu
     waiter = models.ForeignKey(User)
     table = models.ForeignKey(Table)
     comment = models.TextField()
-    
+    state = models.CharField(max_length=50, choices=ORDER_STATE, default='NO')
     def prize(self):
         wynik = 0.0
         #wyciagnij liste DishEntry i pojedz po niej
@@ -42,6 +49,8 @@ class Dish(models.Model):
     #kto wprowadzil
     inscribeBy = models.ForeignKey(User)
     
+    def __unicode__(self):
+        return '('+self.pk.__str__()+') '+self.name
 #Wpis w zamowieniu - para Danie-il.sztuk
 class DishEntry(models.Model):
     dish = models.ForeignKey(Dish)

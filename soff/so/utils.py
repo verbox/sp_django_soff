@@ -3,6 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django import forms
+from models import Dish
 
 #klasa na potrzeby zabezpieczenia widokow generycznych
 class ProtectedListView(ListView):
@@ -14,3 +15,8 @@ class AddDishForm(forms.Form):
     name = forms.CharField(label='Nazwa')
     prize = forms.DecimalField(label='Cena')
     information = forms.CharField(label='Informacja', widget=forms.Textarea)
+    
+class AddDishEntryForm(forms.Form):
+    dish = forms.ModelChoiceField(label='Danie',queryset = Dish.objects.all())
+    count = forms.IntegerField(label='Liczba')
+        
