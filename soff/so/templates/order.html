@@ -13,7 +13,7 @@
 	</tr>
 	{% for de in delist %}
 		<tr>
-			<td>{{de.dish.name}}</td>
+			<td>{{de.dish.name}} ({{de.dish.pk}})</td>
 			<td>{{de.count}}</td>
 			<td>{{de.count}} x {{de.dish.prize}} zł = {{de.prize}} zł</td>
 			<td><a href="delEntry/{{de.pk}}">[X]</a></td>
@@ -25,9 +25,15 @@
 		<td>{{sum}} zł </td>
 	</tr>
 </table>
-</p><p>-------DODAJ NOWĄ POZYCJĘ---------</p>
-<p><form action="{{order.pk}}" method="post">{% csrf_token %}
-	{{ addEntryForm.as_p }}
-	<input type="submit" value="Dodaj" />
-</form></p>
+{% if order.state == 'NO' %}
+	</p><p>-------DODAJ NOWĄ POZYCJĘ---------</p>
+	<p><form action="{{order.pk}}" method="post">{% csrf_token %}
+		{{ addEntryForm.as_p }}
+		<input type="submit" value="Dodaj" />
+	</form></p>
+{% endif %}
+<p>-------ZMIEŃ STATUS ZAMÓWIENIA---------</p>
+<p><form action="jakislink" method="post">{% csrf_token %}
+		{{ changeStatusForm.as_p }}
+		<input type="submit" value="Zmień" />
 {% endblock %}

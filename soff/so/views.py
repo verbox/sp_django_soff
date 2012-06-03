@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from utils import AddDishForm, AddDishEntryForm
+from utils import AddDishForm, AddDishEntryForm, ChangeOrderStatusForm
 from models import Dish, Table, FoodOrder, DishEntry
 
 @login_required(login_url='/so/login')
@@ -123,7 +123,11 @@ def showOrder(request,order_id):
     data.update(csrf(request))
     #wyciagnij zamowienie
     currentOrder = FoodOrder.objects.get(pk=order_id)
+    #formularz dodawania
     addEntryForm = AddDishEntryForm()
+    #formularz zmiany statusu - obslugiwany w innym widoku
+    changeStatusForm = ChangeOrderStatusForm()
+    changeStatusForm.setState(currentOrder.state)
     #formularz
     if request.method == 'POST': #jak wyslano formularz
         addEntryForm = AddDishEntryForm(request.POST)
@@ -145,6 +149,7 @@ def showOrder(request,order_id):
     data['sum'] = currentOrder.prize()
     data['user'] = request.user
     data['addEntryForm'] = addEntryForm
+    data['changeStatusForm'] = changeStatusForm
     return render_to_response('order.html',data)
 
 #wyrzuc dana pozycje

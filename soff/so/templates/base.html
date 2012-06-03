@@ -23,13 +23,16 @@
     </header>
     <div id="content_header"></div>
     <div id="site_content">
-      <div class="sidebar">         
+      <div class="sidebar"> 
+      Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }}<br/>
+      <!-- PJ - tutaj jakoś tak zrobić, by linki nie były na sztywno wpisane -->
+      <a href="http://localhost:8000/so/dish">Przejrzyj dania</a><br/>
+      <a href="http://localhost:8000/so/table">Przejrzyj stoliki</a><br/>
+      {% if user %}
+      <a href="http://localhost:8000/so/logout_view">Wyloguj się</a><br/>
+      {% endif %}
       </div>
       <div id="content">
-      Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }} || 
-      {% if user %}
-      <a href="http://localhost:8000/so/logout_view">Wyloguj się</a> <br>
-      {% endif %}
       	{% block content %}
       	Simple content
       	{% endblock %}      

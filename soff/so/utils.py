@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
@@ -19,4 +20,16 @@ class AddDishForm(forms.Form):
 class AddDishEntryForm(forms.Form):
     dish = forms.ModelChoiceField(label='Danie',queryset = Dish.objects.all())
     count = forms.IntegerField(label='Liczba')
+    
+class ChangeOrderStatusForm(forms.Form):
+    ORDER_STATE = (
+                   ('NO','Nowe'),
+                   ('WR','W trakcie realizacji'),
+                   ('ZR','Zrealizowane'),
+                   ('ZA','Zapłacone'),
+                   )
+    state = forms.ChoiceField(label='Status:',choices=ORDER_STATE)
+    #nie wiem, jak dostac sie do inital z pola state, wiec jade naokolo
+    def setState(self,newState):
+        self.state = newState
         
