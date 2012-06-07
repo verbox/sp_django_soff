@@ -27,6 +27,6 @@ urlpatterns = patterns('soff.so.views',
     #NIEAKTUALNE, NIE MA!
     #url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
     #zmien stan zamowienia
-    #url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+','changeOrderState'),
+    url(r'^order/changeState/(?P<order_id>\d+)','changeOrderState'),
     url(r'^', 'start'),
 )

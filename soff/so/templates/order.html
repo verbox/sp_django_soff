@@ -33,7 +33,7 @@
 	</form></p>
 {% endif %}
 <p>-------ZMIEŃ STATUS ZAMÓWIENIA---------</p>
-<p><form action="jakislink" method="post">{% csrf_token %}
+<p><form action="changeState/{{order.pk}}" method="post">{% csrf_token %}
 		{{ changeStatusForm.as_p }}
 		<input type="submit" value="Zmień" />
 {% endblock %}

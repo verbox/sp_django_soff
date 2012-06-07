@@ -26,7 +26,10 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request,user)
-                return redirect(request.GET['next'])
+                if request.GET['next'] is not None:
+                    return redirect(request.GET['next'])
+                else:
+                    return redirect('so')
             else:
                 return HttpResponse("Zablokowany!!!")
         else:
@@ -149,6 +152,7 @@ def showOrder(request,order_id):
     data['sum'] = currentOrder.prize()
     data['user'] = request.user
     data['addEntryForm'] = addEntryForm
+    changeStatusForm.setState(currentOrder.state)
     data['changeStatusForm'] = changeStatusForm
     return render_to_response('order.html',data)
 
@@ -163,3 +167,18 @@ def delEntry(request,entry_id):
     dishEntry.delete()
     #i wroc do zamowienia
     return redirect('/so/order/'+orderPk.__str__())
+
+#zmien status zamowienia - taki pseudo widok
+@login_required(login_url='/so/login')
+def changeOrderState(request,order_id):
+    #wyciagnij pozycje
+    order = FoodOrder.objects.get(pk=order_id)
+    #poniewaz pole statusu jest lista, wiec chyba nie da sie go zrabac
+    changeStatusForm = ChangeOrderStatusForm(request.POST)
+    #nadaj orderowi nowy status
+    order.state = changeStatusForm.data['state']
+    #zapis
+    order.save()
+    #i wroc do zamowienia
+    return HttpResponseRedirect(reverse('soff.so.views.showOrder',
+            args=(order.pk,)))
