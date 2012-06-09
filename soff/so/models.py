@@ -8,6 +8,7 @@ class Table(models.Model):
     reserved = models.IntegerField(default=-1)
     #nie wiem, jak wywolac funkcje w szablonie - dlatego tak obejdziemy problem
     currentWaiter = models.CharField(default='---',max_length=100)
+    addedBy = models.ForeignKey(User)
     def __unicode__(self):
         return self.pk.__str__() + ' ' +self.maxClientsCount.__str__()
     def setWaiter(self,waiter):

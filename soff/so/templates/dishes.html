@@ -3,11 +3,11 @@
 {% block content %}
 
 <h2>Dania</h2>
-<a href="dish/add">Dodaj nowe danie</a> || coś tam
+<p><a href="dish/add">Dodaj nowe danie</a></p>
 <ul>
 	{% for dish in object_list %}
-		<li>{{ dish.name }} <br>
-		<a href="dish/{{ dish.pk }}">Szczegóły</a><br>
+		<li>{{ dish.name }} - cena {{dish.prize}} zł<br>
+		<em>{{dish.information}}</em><br>
 		{% if dish.inscribeBy == user %}
 		<a href="dish/edit/{{ dish.pk }}">Edytuj</a>
 		{% endif %}

@@ -13,6 +13,8 @@ urlpatterns = patterns('soff.so.views',
         #lista zarc                   
     url(r'^dish',ProtectedListView.as_view(queryset=Dish.objects.all(),
                                            template_name="dishes.html" )),
+    #dodawanie nowego stolika - widok z formularzem
+    url(r'^table/add','addTable'),
     #lista stolikow (albo stolik=link, gdy dany kelner juz "obsluguje" dany 
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj 
     #i przenosi na tworzenie nowego zamowienia
@@ -27,6 +29,6 @@ urlpatterns = patterns('soff.so.views',
     #NIEAKTUALNE, NIE MA!
     #url(r'^order/addEntry/(?P<order_id>\d+)','addOrderEntry'), #f
     #zmien stan zamowienia
-    url(r'^order/changeState/(?P<order_id>\d+)','changeOrderState'),
+    url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+)','changeOrderState'),
     url(r'^', 'start'),
 )

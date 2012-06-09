@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 from django import forms
-from models import Dish
+from models import Dish, FoodOrder
 
 #klasa na potrzeby zabezpieczenia widokow generycznych
 class ProtectedListView(ListView):
@@ -20,16 +20,6 @@ class AddDishForm(forms.Form):
 class AddDishEntryForm(forms.Form):
     dish = forms.ModelChoiceField(label='Danie',queryset = Dish.objects.all())
     count = forms.IntegerField(label='Liczba')
-    
-class ChangeOrderStatusForm(forms.Form):
-    ORDER_STATE = (
-                   ('NO','Nowe'),
-                   ('WR','W trakcie realizacji'),
-                   ('ZR','Zrealizowane'),
-                   ('ZA','Zapłacone'),
-                   )
-    state = forms.ChoiceField(label='Status:',choices=ORDER_STATE)
-    #nie wiem, jak dostac sie do inital z pola state, wiec jade naokolo
-    def setState(self,newState):
-        self.state = newState
         
+class AddTableForm(forms.Form):
+    maxClients = forms.IntegerField(label='Maksymalna liczba klientów',initial=4)

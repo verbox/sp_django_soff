@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 # Create your views here.
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -7,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from utils import AddDishForm, AddDishEntryForm, ChangeOrderStatusForm
+from utils import AddDishForm, AddDishEntryForm, AddTableForm
 from models import Dish, Table, FoodOrder, DishEntry
 
 @login_required(login_url='/so/login')
@@ -41,7 +42,10 @@ def login(request):
     
 def logout_view(request):
     logout(request)
-    return HttpResponse('Wylogowano')
+    data = {}
+    data['information'] = 'Wylogowano!'
+    data['back']='./'
+    return render_to_response('info.html',data)
 #zarcie
 #dodanie dania do listy dan
 @login_required(login_url='/so/login')
@@ -100,6 +104,28 @@ def showTables(request):
     data['me']=request.user.first_name + ' ' + request.user.last_name
     return render_to_response('tables.html',data)
 
+#dodanie stolika
+@login_required(login_url='/so/login')
+def addTable(request):
+    data = {}
+    data.update(csrf(request))
+    if request.method == 'POST': #jak wyslano formularza
+        form = AddTableForm(request.POST)
+        if form.is_valid(): #jak wszystko okej
+            #to pozmieniaj dane
+            newTable = Table();
+            newTable.maxClientsCount = form.cleaned_data['maxClients']
+            newTable.addedBy = request.user
+            newTable.save()
+            #informacje
+            data['information'] = 'Dodano stolik numer '+newTable.pk.__str__()
+            data['back']='./'
+            return render_to_response('info.html',data)
+    else:
+        form = AddTableForm()
+        data['form'] = form
+        return render_to_response('addTable.html',data)
+
 #zarezerwowanie stolika, dodanie nowego zamowienia
 @login_required(login_url='/so/login')
 def addOrder(request,table_id):
@@ -128,9 +154,6 @@ def showOrder(request,order_id):
     currentOrder = FoodOrder.objects.get(pk=order_id)
     #formularz dodawania
     addEntryForm = AddDishEntryForm()
-    #formularz zmiany statusu - obslugiwany w innym widoku
-    changeStatusForm = ChangeOrderStatusForm()
-    changeStatusForm.setState(currentOrder.state)
     #formularz
     if request.method == 'POST': #jak wyslano formularz
         addEntryForm = AddDishEntryForm(request.POST)
@@ -152,8 +175,6 @@ def showOrder(request,order_id):
     data['sum'] = currentOrder.prize()
     data['user'] = request.user
     data['addEntryForm'] = addEntryForm
-    changeStatusForm.setState(currentOrder.state)
-    data['changeStatusForm'] = changeStatusForm
     return render_to_response('order.html',data)
 
 #wyrzuc dana pozycje
@@ -170,13 +191,19 @@ def delEntry(request,entry_id):
 
 #zmien status zamowienia - taki pseudo widok
 @login_required(login_url='/so/login')
-def changeOrderState(request,order_id):
+def changeOrderState(request,order_id,new_state):
     #wyciagnij pozycje
     order = FoodOrder.objects.get(pk=order_id)
-    #poniewaz pole statusu jest lista, wiec chyba nie da sie go zrabac
-    changeStatusForm = ChangeOrderStatusForm(request.POST)
     #nadaj orderowi nowy status
-    order.state = changeStatusForm.data['state']
+    order.state = new_state
+    #i teraz tak - jak jest zapłacone, to posprzątaj stolik
+    if new_state == 'ZA':
+        #wyciągnij stolik
+        table = order.table
+        #pozostaw stolik wolnym
+        table.reserved=-1
+        table.setBlankWaiter()
+        table.save()
     #zapis
     order.save()
     #i wroc do zamowienia

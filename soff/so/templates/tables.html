@@ -3,6 +3,7 @@
 {% block content %}
 
 <h2>Stoły</h2>
+<p><a href="table/add">Dodaj stolik</a></p>
 <ul>
 	{% for table in table_list %}
 		{% if table.reserved == -1 %}

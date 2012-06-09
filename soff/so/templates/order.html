@@ -3,7 +3,7 @@
 {% block content %}
 
 <h2>Zamówienie {{ order.pk }} (stół {{ order.table.pk }})</h2>
-<p><a href="addEntry/{{order.pk}}">Dodaj nową pozycję</a></p>
+<h3>Status zamówienia: {{order.state}} </h3>
 <p>
 <table>
 	<tr>
@@ -16,7 +16,9 @@
 			<td>{{de.dish.name}} ({{de.dish.pk}})</td>
 			<td>{{de.count}}</td>
 			<td>{{de.count}} x {{de.dish.prize}} zł = {{de.prize}} zł</td>
+			{% if order.state == 'NO' %}
 			<td><a href="delEntry/{{de.pk}}">[X]</a></td>
+			{% endif %}
 		</tr>
 	{% endfor %}
 	<tr>
@@ -33,7 +35,21 @@
 	</form></p>
 {% endif %}
 <p>-------ZMIEŃ STATUS ZAMÓWIENIA---------</p>
-<p><form action="changeState/{{order.pk}}" method="post">{% csrf_token %}
-		{{ changeStatusForm.as_p }}
-		<input type="submit" value="Zmień" />
+<p>
+{% if order.state == 'WR' %}
+	<a href="changeState/{{order.pk}}/NO">Nowy</a><br/>
+{% endif %}
+{% if order.state == 'NO' %}
+	<a href="changeState/{{order.pk}}/WR">W trakcie realizacji</a><br/>
+{% endif %}
+{% if order.state == 'WR' %}
+	<a href="changeState/{{order.pk}}/ZR">Zrealizowany</a><br/>
+{% endif %}
+{% if order.state == 'ZR' %}
+	<a href="changeState/{{order.pk}}/ZA">Zapłacono</a> <em>Równoznaczne ze zwolnieniem stolika</em><br/>
+{% endif %}
+{% if order.state == 'ZA' %}
+	<p>Zamówienie zostało zrealizowane i zapłacone.</p>
+{% endif %}
+</p>
 {% endblock %}
