@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from utils import AddDishForm, AddDishEntryForm, AddTableForm
 from models import Dish, Table, FoodOrder, DishEntry
+from django.utils.datetime_safe import datetime
 
 @login_required(login_url='/so/login')
 def start(request):
@@ -198,6 +199,8 @@ def changeOrderState(request,order_id,new_state):
     order.state = new_state
     #i teraz tak - jak jest zapłacone, to posprzątaj stolik
     if new_state == 'ZA':
+        #wpisz datę zapłacenia
+        order.endDate = datetime.now()
         #wyciągnij stolik
         table = order.table
         #pozostaw stolik wolnym

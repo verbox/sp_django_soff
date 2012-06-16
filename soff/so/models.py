@@ -33,6 +33,8 @@ class FoodOrder(models.Model):
     table = models.ForeignKey(Table)
     comment = models.TextField()
     state = models.CharField(max_length=50, choices=ORDER_STATE, default='NO')
+    startDate = models.DateTimeField(auto_now_add=True)
+    endDate = models.DateTimeField(null=True)
     def prize(self):
         wynik = 0.0
         #wyciagnij liste DishEntry i pojedz po niej

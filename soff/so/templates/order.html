@@ -4,6 +4,8 @@
 
 <h2>Zamówienie {{ order.pk }} (stół {{ order.table.pk }})</h2>
 <h3>Status zamówienia: {{order.state}} </h3>
+<p>Data/czas złożenia zamówienia: {{ order.startDate }}</p>
+<p>Data zakończenia (zapłacenia) zamówienia: {{ order.endDate }}</p>
 <p>
 <table>
 	<tr>
