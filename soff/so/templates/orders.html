@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Lista zamówień</h2>
+<p>W tym miejscu formularz filtrowania</p>
+<p>
+<table>
+	<tr>
+		<th>Lp.</th>
+		<th>Kelner</th>
+		<th>Data/Godzina zapłaty</th>
+		<th>Wartość zamówienia</th>
+		<th>Akcje</th>
+	</tr>
+	{% for order in orders %}
+		<tr>
+			<td>{{order.pk}}</td>
+			<td>{{order.waiter.first_name}} {{order.waiter.last_name}}</td>
+			{% if order.endDate == Null %}
+				<td>---</td>
+			{% else %}
+				<td>{{order.endDate}}</td>
+			{% endif %}
+				<td>{{order.sum}}</td>
+				<td>
+				{% if order.endDate == Null %}
+					{% if order.waiter == user %}
+						<a href="/so/order/{{order.pk}}">Zarządzaj zamówieniem</a>
+					{% else %}
+						<em>Inny kelner właśnie obsługuje to zamówienie</em>
+					{% endif %}
+				{% else %}
+					<a href="/so/order/{{order.pk}}">Szczegóły</a>
+				{% endif %}
+				</td>
+		</tr>
+	{% endfor %}
+</table></p>
+{% endblock %}

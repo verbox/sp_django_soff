@@ -212,3 +212,15 @@ def changeOrderState(request,order_id,new_state):
     #i wroc do zamowienia
     return HttpResponseRedirect(reverse('soff.so.views.showOrder',
             args=(order.pk,)))
+    
+#lista zamówień
+@login_required(login_url='/so/login')
+def orderList(request):
+    #tutaj formularze do filtrowania
+    orders = FoodOrder.objects.all()
+    #dla każdego zamówienia wylicz sumę
+    for order in orders:
+        order.sum = order.prize()
+    data = {}
+    data['orders']=orders
+    return render_to_response('orders.html',data)
