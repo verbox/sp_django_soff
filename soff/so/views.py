@@ -15,7 +15,9 @@ from django.utils.datetime_safe import datetime
 @login_required(login_url='/so/login')
 def start(request):
     #zakladamy, ze user juz sie zalogowal
-    return HttpResponse("User: "+request.user.username+", w tym miejscu bedzie strona startowa")
+    data = {}
+    data['user'] = request.user
+    return render_to_response('start.html',data)
         
 def login(request):
     data = {}
@@ -61,7 +63,10 @@ def addDish(request):
                            information=request.POST['information'],
                            inscribeBy=request.user)
             newDish.save()
-            return HttpResponse("Dodano danie")
+            #strona informacyjna
+            data['information'] = 'Dodano danie!'
+            data['back']='./'
+            return render_to_response('info.html',data)
     else:
         form = AddDishForm()
         data['form']=form
@@ -84,7 +89,9 @@ def editDish(request,dish_id):
             editedDish.save()
             #editedDish.information=editedDish.information[0:]
             #editedDish.save()
-            return HttpResponse('Edytowano danie')
+            data['information'] = 'Edytowano danie!'
+            data['back']='./'
+            return render_to_response('info.html',data)
     else:
         
         fdata = {'name' : editedDish.name, 'prize' : editedDish.prize,
@@ -218,18 +225,23 @@ def changeOrderState(request,order_id,new_state):
 def orderList(request):
     data = {}
     data.update(csrf(request))
-    global orders
     #tutaj formularze do filtrowania
     if request.method == 'POST':
         formF = OrderFilterForm(request.POST)
         if formF.is_valid():
             orders = filterOrder(formF)
+            for order in orders:
+                order.sum = order.prize()
             data['formF']=formF
             data['orders']=orders
+            data['user']=request.user
             return render_to_response('orders.html',data)
     else:
         formF = OrderFilterForm()
         orders = FoodOrder.objects.all()
+        for order in orders:
+            order.sum = order.prize()
         data['formF']=formF
         data['orders']=orders
+        data['user']=request.user
         return render_to_response('orders.html',data)

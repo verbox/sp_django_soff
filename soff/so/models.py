@@ -48,7 +48,7 @@ class Dish(models.Model):
     addedDate = models.DateField(auto_now_add=True)
     prize = models.FloatField()
     #waga - w gramach
-    information = models.TextField()
+    information = models.TextField(null=True)
     #kto wprowadzil
     inscribeBy = models.ForeignKey(User)
     

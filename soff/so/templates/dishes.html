@@ -9,7 +9,7 @@
 		<li>{{ dish.name }} - cena {{dish.prize}} zł<br>
 		<em>{{dish.information}}</em><br>
 		{% if dish.inscribeBy == user %}
-		<a href="dish/edit/{{ dish.pk }}">Edytuj</a>
+		<a href="./dish/edit/{{ dish.pk }}">Edytuj</a>
 		{% endif %}
 		
 		</li>

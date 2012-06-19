@@ -2,13 +2,32 @@
 
 {% block content %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-<form method="post" action="">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="login" />
-</form>
+<table>
+	<tr>
+		<td><a href="order"><img src="../static/gfx/dishes.gif" /><br>Przeglądaj dania</a>
+		<ul>
+			<li>Dodaj nowe</li>
+			<li>Zobacz szczegóły</li>
+			<li>Edytuj swoje danie</li>
+		</ul>
+		</td>
+		<td><a href="table"><img src="../static/gfx/tables.gif" /><br>Przeglądaj stoliki</a>
+		<ul>
+			<li>Dodaj nowy</li>
+			<li>Rezerwuj stolik</li>
+			<li>Zarządzaj swoimi zamówieniami</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td><a href="order"><img src="../static/gfx/orders.gif" /><br>Przeglądaj zamówienia</a>
+		<ul>
+			<li>Przeglądaj zamówienia</li>
+			<li>Zarządzaj swoimi zamówieniami</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+	
 
 {% endblock %}
