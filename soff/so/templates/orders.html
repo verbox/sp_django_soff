@@ -3,7 +3,12 @@
 {% block content %}
 
 <h2>Lista zamówień</h2>
-<p>W tym miejscu formularz filtrowania</p>
+<p>
+<form action="" method="post">{% csrf_token %}
+	{{ formF.as_p }}
+	<input type="submit" value="Filtruj" />
+</form>
+</p>
 <p>
 <table>
 	<tr>

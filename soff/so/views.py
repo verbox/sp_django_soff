@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from utils import AddDishForm, AddDishEntryForm, AddTableForm
+from utils import AddDishForm, AddDishEntryForm, AddTableForm, OrderFilterForm, filterOrder
 from models import Dish, Table, FoodOrder, DishEntry
 from django.utils.datetime_safe import datetime
 
@@ -216,11 +216,20 @@ def changeOrderState(request,order_id,new_state):
 #lista zamówień
 @login_required(login_url='/so/login')
 def orderList(request):
-    #tutaj formularze do filtrowania
-    orders = FoodOrder.objects.all()
-    #dla każdego zamówienia wylicz sumę
-    for order in orders:
-        order.sum = order.prize()
     data = {}
-    data['orders']=orders
-    return render_to_response('orders.html',data)
+    data.update(csrf(request))
+    global orders
+    #tutaj formularze do filtrowania
+    if request.method == 'POST':
+        formF = OrderFilterForm(request.POST)
+        if formF.is_valid():
+            orders = filterOrder(formF)
+            data['formF']=formF
+            data['orders']=orders
+            return render_to_response('orders.html',data)
+    else:
+        formF = OrderFilterForm()
+        orders = FoodOrder.objects.all()
+        data['formF']=formF
+        data['orders']=orders
+        return render_to_response('orders.html',data)
