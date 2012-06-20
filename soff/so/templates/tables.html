@@ -8,7 +8,7 @@
 	{% for table in table_list %}
 		{% if table.reserved == -1 %}
 			<li>Stolik numer {{ table.pk }} (maksymalnie klientów: {{ table.maxClientsCount }})
-			<a href="order/add/{{table.pk}}"> Rezerwuj </a>
+			<a href="../order/add/{{table.pk}}"> Rezerwuj </a>
 			</li>
 		{% else %}
 			{% if table.reserved == -11 %}

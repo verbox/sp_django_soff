@@ -3,13 +3,13 @@
 {% block content %}
 
 <h2>Dania</h2>
-<p><a href="dish/add">Dodaj nowe danie</a></p>
+<p><a href="../dish/add">Dodaj nowe danie</a></p>
 <ul>
 	{% for dish in object_list %}
 		<li>{{ dish.name }} - cena {{dish.prize}} zł<br>
 		<em>{{dish.information}}</em><br>
 		{% if dish.inscribeBy == user %}
-		<a href="./dish/edit/{{ dish.pk }}">Edytuj</a>
+		<a href="../dish/edit/{{ dish.pk }}">Edytuj</a>
 		{% endif %}
 		
 		</li>

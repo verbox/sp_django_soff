@@ -1,34 +1,30 @@
-html
-{ height: 100%;}
-
-*
-{ margin: 0;
-  padding: 0;}
+html{height: 100%;}
 
 body
-{ font: normal .80em 'trebuchet ms', arial, sans-serif;
-  background: #F4F4EE;
+{ font-family: "lucida sans", arial, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  font-size: .78em;
+  background: #090708;
   color: #5D5D5D;}
 
 p
-{ padding: 0 0 20px 0;
+{ margin: 0px;
+  padding: 0px 0px 16px 0px;
   line-height: 1.7em;}
 
-img
-{ border: 0;}
-
 h1, h2, h3, h4, h5, h6 
-{ font: normal 175% 'century gothic', arial, sans-serif;
+{ font: normal 179% 'century gothic', arial, sans-serif;
   color: #43423F;
   margin: 0 0 15px 0;
   padding: 15px 0 5px 0;}
 
 h2
-{ font: normal 175% 'century gothic', arial, sans-serif;
+{ font: normal 170% 'century gothic', arial, sans-serif;
   color: #B60000;}
 
 h3
-{ font: normal 165% 'century gothic', arial, sans-serif;}
+{ font: normal 125% 'century gothic', arial, sans-serif;}
 
 h4, h5, h6
 { margin: 0;
@@ -44,149 +40,153 @@ h6
 { color: #362C20;}
 
 a, a:hover
-{ outline: none;
-  text-decoration: underline;
-  color: #A4AA04;}
+{ color: red;
+  text-decoration: none;}
 
 a:hover
-{ text-decoration: none;
-  color: #5D5D5D;}
+{ border-bottom: 1px solid;
+  color: #00C5EE;}
+
+img
+{ border: 0px; 
+  margin: 0px; 
+  padding: 0px;}
+
+a
+{ outline: none;}
+
+form
+{ padding: 0; 
+  margin: 0;}
 
 .left
 { float: left;
-  width: auto;
   margin-right: 10px;}
 
 .right
 { float: right; 
-  width: auto;
   margin-left: 10px;}
 
 .center
 { display: block;
   text-align: center;
-  margin: 20px auto;}
+  margin: 0 auto;}
 
 blockquote
-{ margin: 20px 0; 
-  padding: 10px 20px 0 20px;
+{ margin: 20px 0px 20px 0px; 
+  padding: 10px 20px 0px 20px;
   border: 1px solid #E5E5DB;
   background: #FFF;}
 
 ul
-{ margin: 2px 0 22px 17px;}
+{ margin: 2px 0px 18px 16px;
+  padding: 0px;}
 
 ul li
-{ list-style-type: circle;
-  margin: 0 0 6px 0; 
-  padding: 0 0 4px 5px;}
+{ list-style-type: square;
+  margin: 0px 0px 6px 0px; 
+  padding: 0px;}
 
 ol
-{ margin: 8px 0 22px 20px;}
+{ margin: 8px 0px 0px 24px;
+  padding: 0px;}
 
 ol li
-{ margin: 0 0 11px 0;}
+{ margin: 0px 0px 11px 0px; 
+  padding: 0px;}
 
-#main, #logo, #menubar, #content_header, #site_content, #content_footer, footer
+#main, #logo, #menubar, #site_content, #footer
 { margin-left: auto; 
   margin-right: auto;}
 
 #main
-{ padding-bottom: 20px;}
+{ padding-bottom: 40px;}
 
-header
-{ background: #3A332D;
-  height: 170px;
-  margin-bottom: 30px;}
+#header
+{ background: transparent url(logo.jpg) no-repeat;}
 
 #logo
-{ width: 878px;
+{ width: 860px;
   position: relative;
-  height: 134px;
-  background: #3A332D url(logo.png) no-repeat;}
+  height: 200px;}
 
 #logo #logo_text 
 { position: absolute; 
-  top: 10px;
+  top: 27px;
   left: 0;}
 
 #logo h1, #logo h2
 { font: normal 300% 'century gothic', arial, sans-serif;
   border-bottom: 0;
   text-transform: none;
-  margin: 0 0 0 9px;}
+  margin: 0;}
 
 #logo_text h1, #logo_text h1 a, #logo_text h1 a:hover 
 { padding: 22px 0 0 0;
   color: #FFF;
-  letter-spacing: 0.1em;
-  text-decoration: none;}
+  text-decoration: none;
+  border: 0;}
 
 #logo_text h1 a .logo_colour
-{ color: #ECEF01;}
+{ color: #444;}
+
+#logo_text a:hover .logo_colour
+{ color: #FFF;}
 
 #logo_text h2
 { font-size: 120%;
   padding: 4px 0 0 0;
-  color: #A8AA94;}
+  color: #fff;}
 
 #menubar
-{ height: 44px;
-  width: 940px;
-  margin: 1px auto 0 auto;} 
+{ width: 870px;
+  height: 46px;
+  padding-top: 4px;
+  padding-left: 4px;} 
 
 ul#menu
-{ float: right;}
+{ float: right;
+  margin: 0px;}
 
 ul#menu li
 { float: left;
-  padding: 0 0 0 6px;
-  list-style: none;
-  margin: 2px 2px 0 0;
-  background: #635B53 url(tab.png) no-repeat 0 0;}
+  margin: 5px 0 0 0;
+  padding: 0 0 0 0px;
+  list-style: none;}
 
 ul#menu li a
-{ font: normal 100% 'trebuchet ms', sans-serif;
+{ letter-spacing: 0.1em;
+  font-family: sans-serif;
+  font-size: 120%;
   display: block; 
   float: left; 
   height: 20px;
-  padding: 6px 28px 5px 22px;
+  text-decoration: none; 
+  padding: 9px 15px 5px 15px;
   text-align: center;
   color: #FFF;
-  text-decoration: none;
-  background: #635B53 url(tab.png) no-repeat 100% 0;} 
+  border: none;} 
 
-ul#menu li.tab_selected a
+ul#menu li.selected a
 { height: 20px;
-  padding: 6px 28px 5px 22px;}
+  padding: 7px 15px 4px 15px;}
 
 ul#menu li.selected
-{ margin: 2px 2px 0 0;
-  background: #635B53 url(tab_selected.png) no-repeat 0 0;}
+{ margin: 7px 0 0 0;}
 
 ul#menu li.selected a, ul#menu li.selected a:hover
-{ background: #635B53 url(tab_selected.png) no-repeat 100% 0;
-  color: #111;}
+{ color: #00C6EF;}
 
 ul#menu li a:hover
-{ color: #ECEF01;}
-
-#content_header, #content_footer
-{ width: 940px;
-  background: url(content_header.png) no-repeat;
-  height: 14px;}
-
-#content_footer
-{ background: url(content_footer.png) no-repeat;}
+{ color: #00C6EF;}
 
 #site_content
-{ width: 878px;
+{ width: 858px;
   overflow: hidden;
   margin: 0 auto 0 auto;
-  padding: 0 20px 20px 40px;
-  background: #FFF;
-  border-left: 1px solid #ECECE0;
-  border-right: 1px solid #ECECE0;} 
+  padding: 10px 20px 20px 20px;
+  background: #F6F6F0 url(back.png) repeat-y;
+  border: 15px solid #FFF;} 
 
 .sidebar
 { float: right;
@@ -203,13 +203,13 @@ ul#menu li a:hover
   padding: 0 0 7px 0; }
 
 .sidebar li a, .sidebar li a:hover
-{ padding: 0 0 0 25px;
+{ padding: 0 0 0 35px;
   display: block;
-  background: transparent url(link.png) no-repeat left center;} 
+  background: transparent url(link.png) no-repeat left center;
+  border: 0;} 
 
 .sidebar li a.selected
-{ color: #444;
-  text-decoration: none;} 
+{ color: #444;} 
 
 #content
 { text-align: left;
@@ -222,36 +222,38 @@ ul#menu li a:hover
 #content ul li
 { list-style-type: none;
   background: url(bullet.png) no-repeat;
-  margin: 0 0 6px 0; 
+  margin: 0 0 0 0; 
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
 
-footer
+#footer
 { width: 916px;
-  font: normal 90% arial, sans-serif;
+  font-family: 'trebuchet ms', sans-serif;
+  font-size: 90%;
   height: 28px;
-  margin-top: 20px;
   padding: 20px 0 5px 0;
   text-align: center; 
   background: transparent;
-  color: #333;
+  color: #EEF3CD;
   text-transform: uppercase;
   letter-spacing: 0.1em;}
 
-footer a, footer a:hover
-{ color: #888;
+#footer p
+{ padding: 0;}
+
+#footer a, #footer a:hover
+{ color: #EEF3CD;
   text-decoration: none;}
 
-footer a:hover
-{ color: #333;}
+#footer a:hover
+{ text-decoration: underline;}
 
 .search
-{ color: #5D5D5D; 
-  border: 1px solid #BBB; 
-  width: 134px; 
-  padding: 4px; 
-  font: 100% arial, sans-serif;}
-
+{ color: #555; 
+  border: 1px solid #DDD; 
+  width: 134px;
+  padding: 5px;}
+  
 .form_settings
 { margin: 15px 0 0 0;}
 
@@ -264,7 +266,7 @@ footer a:hover
   text-align: left;}
   
 .form_settings input, .form_settings textarea
-{ padding: 2px; 
+{ padding: 5px; 
   width: 299px; 
   font: 100% arial; 
   border: 1px solid #E5E5DB; 
@@ -273,10 +275,10 @@ footer a:hover
   
 .form_settings .submit
 { font: 100% arial; 
-  border: 1px solid; 
+  border: 0; 
   width: 99px; 
-  margin: 0 0 0 206px; 
-  height: 26px;
+  margin: 0 0 0 212px; 
+  height: 33px;
   padding: 2px 0 3px 0;
   cursor: pointer; 
   background: #3B3B3B; 
@@ -287,7 +289,7 @@ footer a:hover
   width: 299px;}
 
 .form_settings select
-{ width: 304px;}
+{ width: 310px;}
 
 .form_settings .checkbox
 { margin: 4px 0; 
@@ -313,6 +315,6 @@ table tr th, table tr td
   text-align: left;}
   
 table tr td
-{ background: #CCCCCC;
+{ background: #E5E5DB;
   color: #47433F;
   border-top: 1px solid #FFF;}

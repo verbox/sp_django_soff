@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django import forms
 from models import Dish, FoodOrder
 from django.http import HttpResponse
+from django.utils.datetime_safe import datetime
+from datetime import timedelta, date
 
 #klasa na potrzeby zabezpieczenia widokow generycznych
 class ProtectedListView(ListView):
@@ -34,6 +36,29 @@ class OrderFilterForm(forms.Form):
     for waiter in User.objects.all():
         waiters.append((waiter.username,waiter.first_name+' '+waiter.last_name))
     selectWaiter = forms.ChoiceField(label='Pracownik',choices=waiters)
+    #---lista dni w polu 'OD:'---
+    #wyciagnij dzisiaj
+    today = datetime.now().date()
+    fromDays = []
+    #wyciągnij najwcześniejszą datę złożenia zamówienia
+    tempDay = ((FoodOrder.objects.all()[:1])[0]).startDate.date()
+    #rozpocznij listę dni
+    begin = []
+    while (tempDay<=today):
+        begin.append((tempDay,tempDay.__str__()))
+        tempDay = tempDay + timedelta(days=1)
+    selectBegin = forms.ChoiceField(label='Od dnia (włącznie) - złożenie zamówienia',choices=begin)
+    #---lista dni w polu 'DO:'---
+    toDays = []
+    #wyciągnij najwcześniejszą datę złożenia zamówienia
+    earliest = ((FoodOrder.objects.all()[:1])[0]).startDate.date()
+    tempDay = datetime.now().date()
+    #rozpocznij listę dni
+    end = []
+    while (tempDay>=earliest):
+        end.append((tempDay,tempDay.__str__()))
+        tempDay = tempDay - timedelta(days=1)
+    selectEnd = forms.ChoiceField(label='Do dnia (włącznie) - zapłacenie zamówienia',choices=end)
     
 def filterOrder(formF):
     #poprzedni krok/etap filtrowania - na poczatku lista wszystkich
@@ -50,6 +75,17 @@ def filterOrder(formF):
             if order.waiter.username == selectedWaiter:
                 nextStep.append(order)
     #---KONIEC FILTROWANIA PO KELNERZE---
+    prevStep = nextStep
+    #---FILTROWANIE PO DATACH
+    
+    begin = datetime.strptime(formF.data['selectBegin'], '%Y-%m-%d')
+    end = datetime.strptime(formF.data['selectEnd'], '%Y-%m-%d')
+    nextStep = []
+    #idź po wszystkich zamówieniach
+    for order in prevStep:
+        #jak się mieści - wrzuć do listy
+        if ((order.startDate.date() >= begin.date()) and (order.endDate.date() <= end.date())):
+            nextStep.append(order)
     return nextStep
     
     

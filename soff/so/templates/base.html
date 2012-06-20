@@ -2,36 +2,38 @@
 <html>
 
 <head>
-  <title>{% block title %}Simple site{% endblock %}</title>
+  <title>night_sky</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
-  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
 </head>
 
 <body>
   <div id="main">
-    <header>
+    <div id="header">
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1> Prosta <span class="logo_colour">aplikacja</span></a></h1>
-          <h2>Sklep</h2>
+          <h1><a href="index.html">night<span class="logo_colour">_sky</span></a></h1>
+          <h2>Simple. Contemporary. Website Template.</h2>
         </div>
       </div>
-      
-    </header>
-    <div id="content_header"></div>
+    </div>
     <div id="site_content">
-      <div class="sidebar"> 
-      Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }}<br/>
-      <!-- PJ - tutaj jakoś tak zrobić, by linki nie były na sztywno wpisane -->
-      <a href="http://localhost:8000/so/dish">Przejrzyj dania</a><br/>
-      <a href="http://localhost:8000/so/table">Przejrzyj stoliki</a><br/>
-      <a href="http://localhost:8000/so/order">Przejrzyj zamówienia</a><br/>
-      {% if user %}
-      <a href="http://localhost:8000/so/logout_view">Wyloguj się</a><br/>
-      {% endif %}
+      <div class="sidebar">
+	<p>Jesteś zalogowany jako {{ user.first_name }} {{ user.last_name }}<br/></p>
+	<h3>Menu</h3>
+	<p><ul>
+	  <!-- PJ - tutaj jakoś tak zrobić, by linki nie były na sztywno wpisane -->
+	  <li><a href="http://localhost:8000/so/dish">Przejrzyj dania</a><br/></li>
+	  <li><a href="http://localhost:8000/so/table">Przejrzyj stoliki</a><br/></li>
+	  <li><a href="http://localhost:8000/so/order">Przejrzyj zamówienia</a><br/></li>
+	  {% if user %}
+	  <li><a href="http://localhost:8000/so/logout_view">Wyloguj się</a><br/></li>
+	  {% endif %}
+	</ul>
+	</p>
       </div>
       <div id="content">
       	{% block content %}
@@ -39,10 +41,9 @@
       	{% endblock %}      
       </div>
     </div>
-    <div id="content_footer"></div>
-    <footer>
-      Copyright &copy; simplestyle_1 | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a>
-    </footer>
+    <div id="footer">
+      <p>Copyright &copy; night_sky | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a></p>
+    </div>
   </div>
 </body>
 </html>

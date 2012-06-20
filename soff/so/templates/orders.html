@@ -14,6 +14,7 @@
 	<tr>
 		<th>Lp.</th>
 		<th>Kelner</th>
+		<th>Data/Godzina zamówienia</th>
 		<th>Data/Godzina zapłaty</th>
 		<th>Wartość zamówienia</th>
 		<th>Akcje</th>
@@ -22,6 +23,7 @@
 		<tr>
 			<td>{{order.pk}}</td>
 			<td>{{order.waiter.first_name}} {{order.waiter.last_name}}</td>
+			<td>{{order.startDate}}</td>
 			{% if order.endDate == Null %}
 				<td>---</td>
 			{% else %}
