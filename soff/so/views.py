@@ -65,7 +65,7 @@ def addDish(request):
             newDish.save()
             #strona informacyjna
             data['information'] = 'Dodano danie!'
-            data['back']='./'
+            data['back']='../'
             return render_to_response('info.html',data)
     else:
         form = AddDishForm()
@@ -90,7 +90,7 @@ def editDish(request,dish_id):
             #editedDish.information=editedDish.information[0:]
             #editedDish.save()
             data['information'] = 'Edytowano danie!'
-            data['back']='./'
+            data['back']='../'
             return render_to_response('info.html',data)
     else:
         
@@ -230,18 +230,24 @@ def orderList(request):
         formF = OrderFilterForm(request.POST)
         if formF.is_valid():
             orders = filterOrder(formF)
+            ordersSum = 0
             for order in orders:
                 order.sum = order.prize()
+                ordersSum += order.sum
             data['formF']=formF
             data['orders']=orders
             data['user']=request.user
+            data['sum']=ordersSum
             return render_to_response('orders.html',data)
     else:
         formF = OrderFilterForm()
         orders = FoodOrder.objects.all()
+        ordersSum = 0
         for order in orders:
             order.sum = order.prize()
+            ordersSum += order.sum
         data['formF']=formF
         data['orders']=orders
         data['user']=request.user
+        data['sum']=ordersSum
         return render_to_response('orders.html',data)

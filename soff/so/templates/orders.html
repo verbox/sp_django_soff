@@ -29,7 +29,7 @@
 			{% else %}
 				<td>{{order.endDate}}</td>
 			{% endif %}
-				<td>{{order.sum}}</td>
+				<td>{{order.sum}} zł</td>
 				<td>
 				{% if order.endDate == Null %}
 					{% if order.waiter == user %}
@@ -43,5 +43,10 @@
 				</td>
 		</tr>
 	{% endfor %}
+		<tr>
+			<td></td><td></td><td></td>
+			<td><strong>RAZEM</strong></td>
+			<td>{{ sum }} zł</td>
+		</tr>
 </table></p>
 {% endblock %}

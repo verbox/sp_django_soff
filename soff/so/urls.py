@@ -7,18 +7,18 @@ urlpatterns = patterns('soff.so.views',
     url(r'^logout_view$','logout_view'),
     #zwiazane z zarciami
     #dodaj zarcie
-    url(r'^dish/add','addDish'),
+    url(r'^dish/add/','addDish'),
     #edytuj danie
     url(r'^dish/edit/(?P<dish_id>\d+)','editDish'),
         #lista zarc                   
-    url(r'^dish',ProtectedListView.as_view(queryset=Dish.objects.all(),
+    url(r'^dish/',ProtectedListView.as_view(queryset=Dish.objects.all(),
                                            template_name="dishes.html" )),
     #dodawanie nowego stolika - widok z formularzem
-    url(r'^table/add','addTable'),
+    url(r'^table/add/','addTable'),
     #lista stolikow (albo stolik=link, gdy dany kelner juz "obsluguje" dany 
     #stolik - wtedy przenosi na dane zamowienie, albo pusty + przycisk rezerwuj 
     #i przenosi na tworzenie nowego zamowienia
-    url(r'^table','showTables'),
+    url(r'^table/','showTables'),
 
     #dane zamowienie (szczegoly)
     url(r'^order/(?P<order_id>\d+)','showOrder'),
@@ -29,6 +29,6 @@ urlpatterns = patterns('soff.so.views',
     #zmien stan zamowienia
     url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+)','changeOrderState'),
     #lista zamowien
-    url(r'^order','orderList'),
+    url(r'^order/','orderList'),
     url(r'^', 'start'),
 )
