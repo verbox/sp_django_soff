@@ -1,7 +1,15 @@
 {% extends "base.html" %}
-{% block title %} Strona startowa {% endblock %}
+{% block title %} POLNA KARCZMA :: Strona startowa {% endblock %}
 {% block content %}
-
+<p>Witamy na stronie obsługi zamówień punktu gastronomicznego "Polna karczma", zlokalizowanej w malowniczym paśmie Jury 
+Krakowsko-Częstochowskiej, w miejscowości Przymiłowice-Kotyse.</p>
+<p>Niniejsza strona jest demonstracją systemu obsługi zamówień. Wspomaga on pracę załogi, zwłasza w zakresie:
+<ul>
+	<li>obsługi zamówień;</li>
+	<li>tworzenia menu/listy dań;</li>
+	<li>tworzenia stolików/stołów;</li>
+	<li>przeglądania zamówień pod kątem popularności dań.</li></p>
+<center>
 <table>
 	<tr>
 		<td><a href="dish/"><img src="../static/gfx/dishes.gif" /><br>Przeglądaj dania</a>
@@ -26,8 +34,14 @@
 			<li>Zarządzaj swoimi zamówieniami</li>
 		</ul>
 		</td>
+		<td><a href="statistics/"><img src="../static/gfx/statistics.gif" /><br>Przeglądaj statystyki</a>
+		<ul>
+			<li>Przeglądaj zamówienia</li>
+			<li>Popularność poszczególnych dań</li>
+		</ul>
+		</td>
 	</tr>
 </table>
-	
+</center>	
 
 {% endblock %}

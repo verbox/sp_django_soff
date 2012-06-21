@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from utils import AddDishForm, AddDishEntryForm, AddTableForm, OrderFilterForm, filterOrder
+from utils import AddDishForm, AddDishEntryForm, AddTableForm, OrderFilterForm, filterOrder, dishStatistics
 from models import Dish, Table, FoodOrder, DishEntry
 from django.utils.datetime_safe import datetime
 
@@ -251,3 +251,37 @@ def orderList(request):
         data['user']=request.user
         data['sum']=ordersSum
         return render_to_response('orders.html',data)
+    
+#statystyki - właściwie to samo, co lista zamówień, ale z dodatkową statystyką dań.
+@login_required(login_url='/so/login')
+def statistics(request):
+    data = {}
+    data.update(csrf(request))
+    #tutaj formularze do filtrowania
+    if request.method == 'POST':
+        formF = OrderFilterForm(request.POST)
+        if formF.is_valid():
+            orders = filterOrder(formF)
+            ordersSum = 0
+            for order in orders:
+                order.sum = order.prize()
+                ordersSum += order.sum
+            data['formF']=formF
+            data['orders']=orders
+            data['user']=request.user
+            data['sum']=ordersSum
+            data['statistics']=dishStatistics(orders)
+            return render_to_response('statistics.html',data)
+    else:
+        formF = OrderFilterForm()
+        orders = FoodOrder.objects.all()
+        ordersSum = 0
+        for order in orders:
+            order.sum = order.prize()
+            ordersSum += order.sum
+        data['formF']=formF
+        data['orders']=orders
+        data['user']=request.user
+        data['sum']=ordersSum
+        data['statistics']=dishStatistics(orders)
+        return render_to_response('statistics.html',data)

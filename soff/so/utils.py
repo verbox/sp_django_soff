@@ -58,8 +58,20 @@ class OrderFilterForm(forms.Form):
     while (tempDay>=earliest):
         end.append((tempDay,tempDay.__str__()))
         tempDay = tempDay - timedelta(days=1)
-    selectEnd = forms.ChoiceField(label='Do dnia (włącznie) - zapłacenie zamówienia',choices=end)
-    
+    helpF='<i>Sprawdź, czy ta data jest późniejsza od pierwszej - w przeciwnym wypadku system może zachowywać się nieoczekiwanie.</i>'
+    selectEnd = forms.ChoiceField(label='Do dnia (włącznie) - zapłacenie zamówienia',choices=end,help_text=helpF)
+
+#klasa do obejscia problemow w statystykach
+class DishStatisticPair:
+    first = None
+    second = 0
+    sum = 0
+    def __init__(self,f,s):
+        self.first=f
+        self.second=s
+        self.sum = f.prize * s
+
+  
 def filterOrder(formF):
     #poprzedni krok/etap filtrowania - na poczatku lista wszystkich
     prevStep = FoodOrder.objects.all()
@@ -77,15 +89,33 @@ def filterOrder(formF):
     #---KONIEC FILTROWANIA PO KELNERZE---
     prevStep = nextStep
     #---FILTROWANIE PO DATACH
-    
     begin = datetime.strptime(formF.data['selectBegin'], '%Y-%m-%d')
     end = datetime.strptime(formF.data['selectEnd'], '%Y-%m-%d')
     nextStep = []
     #idź po wszystkich zamówieniach
     for order in prevStep:
         #jak się mieści - wrzuć do listy
-        if ((order.startDate.date() >= begin.date()) and (order.endDate.date() <= end.date())):
+        if ((order.startDate.date() >= begin.date()) and ((order.endDate is None) or (order.endDate.date() <= end.date()))):
             nextStep.append(order)
     return nextStep
     
+#tworzy slownik {'nazwa_dania' : [ilosc sztuk,obiekt dania,sztukXcena]}
+def dishStatistics(orders):
+    dishesS = {}
+    #idz po wszystkich zamowieniach
+    for order in orders:
+        #a teraz idz po wszystkich elementach zamowienia
+        for dishEntry in order.dishentry_set.all():
+            #jak dane danie jest w słowniku - inkrementuj odpowiednie wartości
+            if dishesS.has_key(dishEntry.dish.pk):
+                dishesS[dishEntry.dish.pk] += dishEntry.count
+            else:
+                dishesS[dishEntry.dish.pk] = dishEntry.count
+    #pozamieniaj na tablicę
+    dishesS.items().sort()
+    dishesList = []
+    for item in dishesS.items():
+        pair = DishStatisticPair(Dish.objects.get(pk=item[0]),item[1])
+        dishesList.append(pair)
+    return dishesList
     

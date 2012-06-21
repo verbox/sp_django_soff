@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} POLNA KARCZMA :: Statystyki zamówień {% endblock %}
+{% block content %}
+
+<h2>Statystyki zamówień</h2>
+<p>
+<form action="" method="post">{% csrf_token %}
+	{{ formF.as_p }}
+	<input type="submit" value="Filtruj" />
+</form>
+</p>
+<p>
+<table>
+	<tr>
+		<th>Lp.</th>
+		<th>Kelner</th>
+		<th>Data/Godzina zamówienia</th>
+		<th>Data/Godzina zapłaty</th>
+		<th>Wartość zamówienia [zł]</th>
+		<th width='40%'>Elementy zamówienia</th>
+	</tr>
+	{% for order in orders %}
+		<tr>
+			<td>{{order.pk}}</td>
+			<td>{{order.waiter.first_name}} {{order.waiter.last_name}}</td>
+			<td>{{order.startDate}}</td>
+			{% if order.endDate == Null %}
+				<td>---</td>
+			{% else %}
+				<td>{{order.endDate}}</td>
+			{% endif %}
+				<td>{{order.sum}}</td>
+				<td>
+				{% for dishEntry in order.dishentry_set.all %}
+					<strong>{{ dishEntry.dish.name }}</strong> x {{dishEntry.count}} szt. <br>
+				{% endfor %}
+				</td>
+		</tr>
+	{% endfor %}
+		<tr>
+			<td></td><td></td><td></td>
+			<td><strong>RAZEM</strong></td>
+			<td>{{ sum }} zł</td>
+		</tr>
+</table></p>
+<h3>W tym okresie podano następujące dania:</h3>
+<p><table>
+	<tr>
+		<th>Lp.</th>
+		<th>Nazwa dania</th>
+		<th>Cena dania [zł]</th>
+		<th>Opis</th>
+		<th>Sztuk</th>
+		<th>Koszt x Sztuk [zł]</th>
+	</tr>
+	{% for pair in statistics %}
+		<tr>
+			<td>{{pair.first.pk}}</td>
+			<td>{{pair.first.name}}</td>
+			<td>{{pair.first.prize}}</td>
+			<td><em>{{pair.first.information}}</em></td>
+			<td><strong>{{pair.second}}</strong></td>
+			<td><strong>{{pair.sum}}</strong></td>
+		</tr>
+	{% endfor %}
+</table></p> 
+{% endblock %}

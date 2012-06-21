@@ -30,5 +30,7 @@ urlpatterns = patterns('soff.so.views',
     url(r'^order/changeState/(?P<order_id>\d+)/(?P<new_state>\w+)','changeOrderState'),
     #lista zamowien
     url(r'^order/','orderList'),
+    #statystyki
+    url(r'^statistics/','statistics'),
     url(r'^', 'start'),
 )

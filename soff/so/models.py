@@ -31,7 +31,6 @@ class FoodOrder(models.Model):
     #lista wpisow w zamowieniu - z automatu
     waiter = models.ForeignKey(User)
     table = models.ForeignKey(Table)
-    comment = models.TextField()
     state = models.CharField(max_length=50, choices=ORDER_STATE, default='NO')
     startDate = models.DateTimeField(auto_now_add=True)
     endDate = models.DateTimeField(null=True)
