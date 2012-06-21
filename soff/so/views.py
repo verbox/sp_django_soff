@@ -47,7 +47,7 @@ def logout_view(request):
     logout(request)
     data = {}
     data['information'] = 'Wylogowano!'
-    data['back']='./'
+    data['back']='http://localhost:8000/so/'
     return render_to_response('info.html',data)
 #zarcie
 #dodanie dania do listy dan
@@ -127,7 +127,7 @@ def addTable(request):
             newTable.save()
             #informacje
             data['information'] = 'Dodano stolik numer '+newTable.pk.__str__()
-            data['back']='./'
+            data['back']='../'
             return render_to_response('info.html',data)
     else:
         form = AddTableForm()

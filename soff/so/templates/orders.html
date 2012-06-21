@@ -12,7 +12,7 @@
 <p>
 <table>
 	<tr>
-		<th>Lp.</th>
+		<th>ID</th>
 		<th>Kelner</th>
 		<th>Data/Godzina zamówienia</th>
 		<th>Data/Godzina zapłaty</th>
@@ -33,12 +33,12 @@
 				<td>
 				{% if order.endDate == Null %}
 					{% if order.waiter == user %}
-						<a href="/so/order/{{order.pk}}">Zarządzaj zamówieniem</a>
+						<a href="../order/{{order.pk}}">Zarządzaj zamówieniem</a>
 					{% else %}
 						<em>Inny kelner właśnie obsługuje to zamówienie</em>
 					{% endif %}
 				{% else %}
-					<a href="/so/order/{{order.pk}}">Szczegóły</a>
+					<a href="../order/{{order.pk}}">Szczegóły</a>
 				{% endif %}
 				</td>
 		</tr>

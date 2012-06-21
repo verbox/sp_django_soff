@@ -3,7 +3,7 @@
 {% block content %}
 
 <h2>Stoły</h2>
-<p><a href="table/add">Dodaj stolik</a></p>
+<p><a href="../table/add/">Dodaj stolik</a></p>
 <ul>
 	{% for table in table_list %}
 		{% if table.reserved == -1 %}
@@ -17,7 +17,7 @@
 				</li>
 			{% else %}
 				{% if table.currentWaiter == me %}
-					<li><a href="order/{{table.reserved}}">
+					<li><a href="../order/{{table.reserved}}">
 					Stolik numer {{ table.pk }} - {{ table.currentWaiter }}</a></li>
 				{% else %}
 					<li>Stolik numer {{ table.pk }} - {{ table.currentWaiter }}</li>
